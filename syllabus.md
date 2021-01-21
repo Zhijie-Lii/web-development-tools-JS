@@ -1,5 +1,5 @@
 ﻿# Course Syllabus: INFO 6250 - Silicon Valley 
-# Fall Semester 2020 - Friday
+# Spring Semester 2021 - Friday
 Instructor: Brett Ritter `<b.ritter@neu.edu>`
 
 This course covers Web Development, focusing on both the fundamentals and from them modern development practices for the web.  The class will use Javascript on both the front- and back-ends of web application development, but the lessons learned will be applicable to many languages.  
@@ -97,5 +97,5 @@ Thu Apr 15 (11:59pm PT)
 
 ### Final Projects Due 
 Thu Apr 22 (11:59pm PT)
-No class Fri Apr 23 (just Project due)
+No class Fri Apr 23 (just Project due on Thu Apr 22)
 
