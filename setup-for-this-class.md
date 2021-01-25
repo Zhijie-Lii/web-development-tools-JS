@@ -68,13 +68,15 @@ You should make the configuration changes below.  The exact means to get to thes
 Do the following, which will let me (and you) know that everything is working.  If you run into a problem you can't solve, speak up on Slack.
 
 1. Complete all the installation and config steps above
-2. Follow the instructions at this link: 
+2. If you have not already followed the below link to create your own copy of the class repo on github, follow it now:
     * https://rebrand.ly/svinfo6250-github
-3. If you have not cloned the repository this file is in to your computer, do so now (`git clone value-from-the-clone-or-download-button-on-github`)
+3. If you have not cloned the repository this file is in to your computer, do so now (`git clone value-from-the-code-button-on-github`)
+    * the `value-from-code-button-on-github` is an instruction, you should replace that value with the value you can copy when you click the "code" button on the repo in github.
     * After cloning, be sure to be in the correct directory, the root directory of the project, that is, the directory that git clone just created
-4. If you are not strong with git, see the 'basic-git' file in the readings/ directory, but for now just follow the steps here
-5. Change into the work/setup-test directory (`cd work/setup-test`)
-6. Follow the instructions in the README.md there.
+4. If you are not strong with git, see the 'basic-git.md' file in the readings/ directory, but for now just follow the steps here
+5. Change into the repo directory (`cd student-YOUR-GITHUB-ID`) on the command line
+6. Change into the work/setup-test directory in the repo (`cd work/setup-test`)
+7. Follow the instructions in the README.md there.
 
 ## I'm a bit confused
 
