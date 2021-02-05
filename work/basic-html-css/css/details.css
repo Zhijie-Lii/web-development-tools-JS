@@ -1,0 +1,13 @@
+header {
+    font-weight: bold;
+    color: red;
+}
+
+.message {
+    font-weight: bold;
+}
+
+form {
+    float: left;
+    width: 50%;
+}
