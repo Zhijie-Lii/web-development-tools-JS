@@ -16,6 +16,7 @@ const messages = [
 
 function addMessage({ sender, text }) {
   // Fill in!
+  // JS Object
 }
 
 const chat = {
