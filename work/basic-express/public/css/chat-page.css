@@ -1,0 +1,18 @@
+html { 
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+}
+
+ul {list-style:none;}
+
+ol {background-color: azure;}
+
+li {
+  line-height: 1.5;
+  font-size: 20px
+}
+
+form { 
+  display: flex;
+
+}
