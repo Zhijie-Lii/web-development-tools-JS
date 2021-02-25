@@ -1,4 +1,3 @@
-const comparedWords = require('./compared-words');
 const words = require('./words');
 
 const gamePanel = {  
@@ -6,7 +5,7 @@ const gamePanel = {
     // </br>
     // ${gamePanel.displayWordMatchesList()}
 
-  gamePage: function(){
+  gamePage: function(guessedWord, turns, message){
     return ` <!doctype html>
             <html>
               <head>
@@ -19,18 +18,23 @@ const gamePanel = {
                     
                     <div class="guessed-word">
                     Guessed Words and matches:
-                    ${gamePanel.displayGuessedWord(comparedWords)}
+                    ${gamePanel.displayGuessedWord(guessedWord )}
                     </div>
 
                     <div class="turns">
                     Turns:
-                    ${gamePanel.displayGuessTurns(comparedWords)}
+                    ${gamePanel.displayGuessTurns(turns)}
                     </div>  
                     
                     <div class="valid-words">
                     Valid words:
                     [${gamePanel.displayWordsList(words)}]  
                     </div>         
+
+                    <div class="guess-message">
+                    Message:
+                    ${gamePanel.displayGuessMessage(message)}
+                    </div>    
                 
                     <div class="guess-input">
                     ${gamePanel.displayTryForm()}
@@ -40,9 +44,19 @@ const gamePanel = {
     `;
   },
 
-  displayGuessedWord: function(comparedWords){
+  displayGuessedWord: function(guessedWord){
+      //Object.Map()
+    //   return `<div class="guessed-word-list>"`+
+    //   Object.values(chat.users).map( user => `
 
-      `${JSON.stringify(comparedWords.guessedWord)}`
+    //   `).join('')+`</div`
+    // return guessedWord;
+    return `[` +
+          Object.keys(guessedWord).map(word => `
+            ${word} - ${guessedWord[word]}
+          `).join('') +
+        `]`;
+      // `${JSON.stringify(guessedWord)}`
   },
 
 //   displayGuessedWordsList: function(){
@@ -61,10 +75,13 @@ const gamePanel = {
 //       return arr2;
 //   },
   
-  displayGuessTurns: function(comparedWords){
-      //return comparedWords.turns;
+  displayGuessTurns: function(turns){
+      return turns;
   },
 
+  displayGuessMessage: function(message){
+     return message;
+  },
 
   displayWordsList: function(words){
       let list = [];
@@ -72,8 +89,6 @@ const gamePanel = {
           list += words[i]+ "\n";
       }
     return list;
-    
-   // Object.values(words).map( user => );
   },
   
   displayTryForm: function(){

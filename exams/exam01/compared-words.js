@@ -1,44 +1,41 @@
-const comparedWords = {
-    // guessedWordList,
-    // wordMatchesList,
-    //  turns,       //could not pass in turn and guessedWord for initialization? 
-     //guessedWord,
+function compare( word, guess ){ 
+    let matches = 0;
+    const letterCount = {};
 
-    compare:function( word, guess ) { 
-        let matches = 0;
-        const letterCount = {};
-
-        for( let letter of word.toLowerCase() ) { 
-            letterCount[letter] = letterCount + 1 || 1;
-        }
-        for( let letter of guess.toLowerCase() ) { 
-            if( letterCount[letter] ) {
-            letterCount[letter] -= 1;
-            matches += 1; 
-            }
-        }
-        return matches;
-    },
-
-    contains: function(arr, obj){
-        for (i=0; i++; i<arr.length){
-            if (arr[i] === obj ){
-            return true;
-            }
-            return false;
+    for( let letter of word.toLowerCase() ) { 
+        letterCount[letter] = letterCount + 1 || 1;
+    }
+    for( let letter of guess.toLowerCase() ) { 
+        if( letterCount[letter] ) {
+        letterCount[letter] -= 1;
+        matches += 1; 
         }
     }
+    return matches;
+}
+
+function contains (arr, obj){
+    for (let i=0;  i<arr.length; i++){   //block-wide var i, otherwise i will be false
+        if (arr[i].toLowerCase() === obj.toLowerCase() ){
+        return true;
+        }
+    }
+    return false;
+}
+
+const comparedWords = {
+    compare,
+    contains,
+    // turns,
+    // guessedWord,
 };
-
-const guessedWord = [];
-
-const turns = 0;
 
 module.exports = comparedWords;
 
-// const guessedWordList = [];
-
-// const wordMatchesList = [];
+// guessedWordList,
+    // wordMatchesList,
+    // const turns = 0;      //could not pass in turn and guessedWord for initialization? 
+    // const guessedWord = [];
 
  //const guessedWordList = [];
     //["pig","gap"]
