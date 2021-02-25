@@ -56,7 +56,7 @@ app.post('/trial', (req, res) => {
       turns : 0,
       guessedWord: {},
       secretWord : words[Math.floor(Math.random() * words.length)],
-      message : "You guess the right word and new game has started",
+      message : `You guess the right word in ${session[sid].turns+1} turns and new game has started`,
       };
   //   console.log("Yes, you get the word in ${turns} times, and you can now change new words");
   // return;
