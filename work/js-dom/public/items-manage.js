@@ -18,8 +18,8 @@
     const listEl = document.querySelector('#item-app .itemlist');
     const inputEl = document.querySelector('#item-app input');
     const buttonEl = document.querySelector('#item-app button');
-    const decreEl = document.querySelector('#item-app .decrement');
-    const increEl = document.querySelector('#item-app itemIncrement');
+    // const decreEl = document.querySelector('#item-app .decrement');
+    // const increEl = document.querySelector('#item-app .increment');
 
     //setup functions
     disableButtonIfNoInput();
@@ -34,13 +34,13 @@
         const html = itemlist.map((item, index) =>{
             return `
             <li>
-              <span class="item ${item.quantity>0 ? "" : "none"}" data-index="${index}">${item.itemName}</span>
+              <span class="item " data-index="${index}">${item.itemName}</span>
               <span class="delete" data-index="${index}">X</span>
 
               <span class="colon">:</span>
               <span class="decrement" data-index="${index}">-</span>
               <span class="item quantity" data-index="${index}">${item.quantity}</span>
-              <span class="itemIncrement" data-index="${index}">+</span>
+              <span class="increment" data-index="${index}">+</span>
             </li>
             `;
         }).join('');
@@ -60,28 +60,30 @@
     }
 
     function addAbilityToDecreItemsQuant(){
-        decreEl.addEventListener('click', (e) => {
+        listEl.addEventListener('click', (e) => {
             if(!e.target.classList.contains('decrement')){
                 return;
             }
 
             const index = e.target.dataset.index;
-            if (itemlist[index].quantity =0){
-                decreEl.disabled = true;
+            if (itemlist[index].quantity == 0){
+                e.target.decrement.disabled = true;
             } else { 
                 itemlist[index].quantity--;
             }
+            render(itemlist);
         });
     }
 
     function addAbilityToIncreItemsQuant(){
-        increEl.addEventListener('click', (e) => {
-            if(!e.target.classList.contains('Increment')){
+        listEl.addEventListener('click', (e) => {
+            if(!e.target.classList.contains('increment')){
                 return;
             }
 
             const index = e.target.dataset.index;
             itemlist[index].quantity++;
+            render(itemlist);
         });
     }
 
