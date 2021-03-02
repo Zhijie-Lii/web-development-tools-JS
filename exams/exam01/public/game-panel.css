@@ -1,0 +1,19 @@
+h1 {
+    text-align: center;
+}
+
+.guessed-word{
+    background-color: lavender;
+}
+
+.turns{
+    background-color: darkorange;
+}
+
+.valid-words{
+    color: darkolivegreen;
+}
+
+.guess-input{
+    text-align: center;
+}
