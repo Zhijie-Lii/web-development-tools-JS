@@ -1,0 +1,51 @@
+#item-app .item{
+     cursor: pointer;
+}
+
+#item-app li:nth-child(even) {
+    background-color: antiquewhite;
+}
+
+#item-app h1 {
+    text-align: center;
+}
+
+#item-app .item.quantity {
+    margin-left: 10px;
+    margin-right: 10px;
+    
+}
+
+#item-app .item{
+    width: 80px;
+    display:inline-block;
+}
+
+#item-app .decrement {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 2px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+#item-app .increment {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 2px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+#item-app .delete {
+    margin-left: 10px;
+    font-weight: bolder;
+    background: orange;
+    cursor: pointer;
+}
+
+/* #item-app .decrement.disabled {
+    background-color: darkgray;
+} */
