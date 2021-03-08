@@ -1,0 +1,54 @@
+h1 {
+    text-align: center;
+}
+
+.items {
+    line-height: 180%
+}
+
+li:nth-child(even) {
+    background-color: antiquewhite;
+}
+
+.name {
+    width: 30%;
+    display: inline-block;
+    text-align:right
+}
+
+.quantity {
+    margin-left: 10px;
+    margin-right: 10px;
+    
+}
+
+.delete {
+    margin-right: 10px;
+    font-weight: bolder;
+    background: orange;
+    cursor: pointer;
+}
+
+.decrement {
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 1px solid grey;
+    cursor: pointer;
+}
+
+.increment {
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 1px solid grey;
+    cursor: pointer;
+}
+
+.decrement.disabled {
+    background-color: darkgray;
+}
+
+/* input:disabled {
+    border: 1px solid #DDD;
+    background-color: #F5F5F5;
+    color:#ACA899;
+} */
