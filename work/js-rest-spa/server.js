@@ -19,21 +19,20 @@ app.use(express.static('./public'));
     res.json(Object.entries(inventory));  // return into array
   });
   
-  app.post('/inventory', express.json(), (req, res) => {
-    const name = req.body.name;
+  app.post('/inventory/:name', express.json(), (req, res) => {
+    const name = req.params.name;
     // TODO: Should sanitize user input here before saving!
     if(!name) {
       res.status(400).json({ error: 'missing-name' });
       return;
     }
-    // if(Object.values(inventory[name])) { // prevent from same name
-    //   res.status(409).json({ error: 'duplicate' });
-    //   return;
-    // }
-    
-    // console.log(Object.values().map( (item) => {
-    //   item[name]
-    // }).join(''));
+    for (const item of Object.values(inventory)) {   // prevent from same name 
+      if(item.name==name ) {
+        res.status(409).json({ error: 'duplicate' });
+        return;
+      }
+    }
+ 
     const Id = uuidv4();
     inventory[Id] = {
         itemId : Id,

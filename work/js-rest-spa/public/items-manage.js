@@ -20,6 +20,7 @@
     addAbilityToIncreItemsQuant();
     addAbilityToDecreItemsQuant();
     loadPage();
+    // showUserStatus( );
 
     function updateStatus( message ) {
         status.innerText = message;
@@ -48,6 +49,11 @@
         }
         return response.json()
         .then( err => Promise.reject(err) );
+    }
+
+    function showUserStatus() {
+        // let userStatus = `Latest Update: ${message}`;
+        status.innerHTML = userStatus;
     }
 
     function loadPage(){
@@ -94,7 +100,7 @@
                     .then( convertError )
                     .then( items => {
                         renderItem(items);
-                        updateStatus(`The item ${itemlist[itemId].name} has decreased one`);
+                        updateStatus(`The item has decreased one`); //${(Object.values(items[itemId])).name}
                     })
                     .catch( err => {
                         updateStatus(errMsgs[err.error] || err.error);
@@ -122,8 +128,10 @@
                 .catch( () => Promise.reject( { error: 'network-error' }) )
                 .then( convertError )
                 .then( items => {
+                    // itemlist[itemId] = items;
+                    // console.log(items);
                     renderItem(items);
-                    updateStatus(`The item ${itemlist[itemId].name} has increased one`);
+                    updateStatus(`The item has increased one`); //${itemId.name} 
                 })
                 .catch( err => {
                     updateStatus(errMsgs[err.error] || err.error);
@@ -136,7 +144,7 @@
         buttonEl.addEventListener('click',  (e) => {
             const name = inputEl.value;
             if (name) {
-                fetch(`/inventory`, {
+                fetch(`/inventory/${name}`, {
                     method: 'POST',
                     body: JSON.stringify({
                         // itemId: items.itemId,
