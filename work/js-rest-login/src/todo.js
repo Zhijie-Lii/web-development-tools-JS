@@ -18,9 +18,12 @@ checkLoginStatus()
     todos = userInfo.todos;
     renderTodos(todos);
 })
-.catch( error => {
+.catch( error => { 
+    JSON.stringify(error);
     showLogin();
 });
+
+
 
 addNewTodo()
 .then( (userInfo) => {

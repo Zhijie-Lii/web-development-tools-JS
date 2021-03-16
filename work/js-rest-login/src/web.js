@@ -17,6 +17,10 @@ export const showLogin = function() {
     document.querySelector('#todo-app .logged-in').classList.add('hidden');
 }
 
+const showLoggedInUserName = function( username ) {
+    document.getElementById("user").innerText = username;   
+}
+
 export const addLogin = function() {
     document.querySelector('#todo-app .login button').addEventListener('click', () => {
         const usernameEl = document.querySelector('#todo-app .login input');
@@ -25,7 +29,10 @@ export const addLogin = function() {
         performLogin(username)
         .then( userInfo => {
             showContent();
-            setTimeout( checkLoginStatus, 5000 );
+            setTimeout( checkLoginStatus, 5000 ); //
+            username = userInfo.username;
+            console.log(username);
+            showLoggedInUserName(username);
             todos = userInfo.todos;
             renderTodos(todos);
         })

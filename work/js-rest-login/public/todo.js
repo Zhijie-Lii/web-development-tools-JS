@@ -151,6 +151,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "rankTodos": () => (/* binding */ rankTodos)
 /* harmony export */ });
 /* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services */ "./src/services.js");
+function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
+
 
 
 var showContent = function showContent() {
@@ -161,13 +163,22 @@ var showLogin = function showLogin() {
   document.querySelector('#todo-app .login').classList.remove('hidden');
   document.querySelector('#todo-app .logged-in').classList.add('hidden');
 };
+
+var showLoggedInUserName = function showLoggedInUserName(username) {
+  document.getElementById("user").innerText = username;
+};
+
 var addLogin = function addLogin() {
   document.querySelector('#todo-app .login button').addEventListener('click', function () {
     var usernameEl = document.querySelector('#todo-app .login input');
     var username = usernameEl.value;
     (0,_services__WEBPACK_IMPORTED_MODULE_0__.performLogin)(username).then(function (userInfo) {
       showContent();
-      setTimeout(_services__WEBPACK_IMPORTED_MODULE_0__.checkLoginStatus, 5000);
+      setTimeout(_services__WEBPACK_IMPORTED_MODULE_0__.checkLoginStatus, 5000); //
+
+      username = (_readOnlyError("username"), userInfo.username);
+      console.log(username);
+      showLoggedInUserName(username);
       todos = userInfo.todos;
       renderTodos(todos);
     })["catch"](function (err) {
@@ -228,7 +239,7 @@ var deleteTodo = function deleteTodo() {
       var index = e.target.dataset.index;
       (0,_services__WEBPACK_IMPORTED_MODULE_0__.callToDeleteTodo)(index).then(function (todos) {
         renderTodos(todos);
-        updateStatus("Successfully deleted a todo"); // delete 
+        updateStatus("Successfully delete a todo"); // delete 
       })["catch"](function (err) {
         updateStatus(errMsgs[err.error] || err.error);
       });
@@ -352,6 +363,7 @@ var todos = [];
   todos = userInfo.todos;
   (0,_web__WEBPACK_IMPORTED_MODULE_1__.renderTodos)(todos);
 })["catch"](function (error) {
+  JSON.stringify(error);
   (0,_web__WEBPACK_IMPORTED_MODULE_1__.showLogin)();
 });
 (0,_web__WEBPACK_IMPORTED_MODULE_1__.addNewTodo)().then(function (userInfo) {
@@ -364,16 +376,6 @@ var todos = [];
 //     renderTodos(todos);
 //     rankTodos( desc )
 // });
-// fetch('/demo')
-// .then( response => {
-//     if (response.ok) {
-//         return response.json();
-//     }
-//     console.log('error');
-// })
-// .then( () => {
-//     const root = document.querySelector('#root');
-// })
 })();
 
 /******/ })()
