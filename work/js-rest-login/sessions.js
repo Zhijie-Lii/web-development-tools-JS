@@ -8,21 +8,24 @@ const isValidSession = function(sid) {
 
 const validUserName = function(username) {
     const errors = [];
-    console.log(username);
     const clean = username.replace(/[^A-Za-z0-9_]+/g, '');
     console.log(clean);
     if (clean !== username) {
-        errors.push('') //return error
+        errors.push('Invalid username'); 
+    }
+    if (username === "dog") {  
+        errors.push('Dog drools');
     }
     if (!username) {
-        errors.push('username was empty')
+        errors.push('Username was empty');
     }
 
-    return errors.lengths ? errors : '';
+    return errors.length ? errors : ''; 
 };
 
 const createSession = function(username) {
     const sid = uuidv4();
+    let id = Date.parse(new Date());
     sessions[sid] = {
         username,
         todos: [
@@ -30,6 +33,7 @@ const createSession = function(username) {
                 task: 'Do the 6250',
                 done: false,
                 priority: 4,
+                id:id,
             },
         ],
     };

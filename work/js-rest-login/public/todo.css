@@ -27,7 +27,10 @@ h1 {
 #todo-app .priority {
     margin-left: 10px;
     margin-right: 10px;
+}
 
+#sortBtn {
+    text-align: center;
 }
 
 .hidden{

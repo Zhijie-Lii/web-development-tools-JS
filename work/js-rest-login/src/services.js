@@ -17,7 +17,7 @@ export const checkLoginStatus = function() {
 export const performLogin = function( username ) {
     return fetch('/session', {
         method: 'POST',
-        headers: new Headers({ //headers
+        headers: new Headers({ 
             'content-type': 'application/json',
         }),
         body: JSON.stringify( { username: username }),
@@ -28,9 +28,10 @@ export const performLogin = function( username ) {
     })
     .then( response => {
         if (response.ok) {
-            console.log(username);//
+            console.log(username);
             return response.json();
         }
+        console.log('error',username, typeof err);
         return response.json().then(err => Promise.reject(err) );
     });
 };
@@ -42,11 +43,9 @@ export const callToAddNewTodo = function( task, prio ) {
             'content-type': 'application/json',
         }),
         body: JSON.stringify({
-            // todos: {
                 task: task,
                 done: false,
                 priority: prio,
-            // },
         }),
     })
     .catch( () => {
@@ -62,18 +61,13 @@ export const callToAddNewTodo = function( task, prio ) {
 
 
 export const callToDeleteTodo = function(index) {
-    return fetch(`/session/${index}`, {
+    return fetch(`/todo/${index}`, {
         method: 'DELETE',
-        // headers: new Headers({
-        //     'content-type': 'application/json',
-        // }),
-        // body: JSON.stringify({ index }),
     })
     .catch( () => {
         return Promise.reject( { error: 'network-error'} )
     })
    .then( response => {
-
         if (response.ok) {
             return response.json();
         }
@@ -82,21 +76,29 @@ export const callToDeleteTodo = function(index) {
 };
 
 export const callToChangeTodoPriority = function( index, newPriority ) {
-    return fetch('/session', {
+    return fetch(`/todo/${index}`, {
         method: 'PATCH',
         headers: new Headers({
             'content-type': 'application/json',
         }),
         body: JSON.stringify({ 
-            // todos[index]: {
-            //     priority : newPriority,
-            // }
+                priority : newPriority,
+                id:index
         }),
     })
+    .catch( () => {
+        return Promise.reject( { error: 'network-error'} )
+    })
+   .then( response => {
+        if (response.ok) {
+            return response.json();
+        }
+        return response.json().then(err => Promise.reject(err) );
+    });    
 }
 
-export const callToUpdate = function() { //pooling every 5 sec
-    return fetch('./session', {
-        method: ''
-    })
-}
+// export const callToUpdate = function() { //pooling every 5 sec
+//     return fetch('./session', {
+//         method: ''
+//     })
+// }

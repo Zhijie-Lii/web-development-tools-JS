@@ -7,114 +7,127 @@ import {
     callToAddNewTodo, callToChangeTodoPriority, callToDeleteTodo
 } from './services';
 
-export const showContent = function() {
+
+const usernameEl = document.querySelector('#todo-app .login input');
+const todoListEl = document.querySelector('#todo-app .todos');
+const addButtonEl = document.querySelector('#add-todo .add');
+const taskEl = document.querySelector('#add-todo .task');
+const priorityEl = document.querySelector('#add-todo .priority');
+const status = document.querySelector('#todo-app .status');
+const sortEle = document.querySelector('#sortBtn');
+
+let todoTemp = [];
+
+const errMsgs = { }
+
+addLogin();
+
+checkLoginStatus()
+.then( (userInfo) => {
+    showContent();
+    renderTodos(userInfo.todos);
+})
+.catch( error => { 
+    JSON.stringify(error);
+    showLogin();
+});
+
+addNewTodo();
+deleteTodo(); 
+updateTodoPriority();
+changeRanking( );
+
+
+function showContent() {
     document.querySelector('#todo-app .login').classList.add('hidden');
     document.querySelector('#todo-app .logged-in').classList.remove('hidden');
+    document.querySelector('#add-todo').classList.remove('hidden');
 }
 
-export const showLogin = function() {
+function showLogin() {
     document.querySelector('#todo-app .login').classList.remove('hidden');
     document.querySelector('#todo-app .logged-in').classList.add('hidden');
+    document.querySelector('#add-todo').classList.add('hidden');
 }
 
-const showLoggedInUserName = function( username ) {
-    document.getElementById("user").innerText = username;   
-}
-
-export const addLogin = function() {
+function addLogin() {
     document.querySelector('#todo-app .login button').addEventListener('click', () => {
-        const usernameEl = document.querySelector('#todo-app .login input');
+        // showLogin();
         const username = usernameEl.value;
-
         performLogin(username)
         .then( userInfo => {
             showContent();
-            setTimeout( checkLoginStatus, 5000 ); //
-            username = userInfo.username;
-            console.log(username);
-            showLoggedInUserName(username);
-            todos = userInfo.todos;
-            renderTodos(todos);
+            // let todos = userInfo.todos;
+            renderTodos(userInfo.todos);
+            updateStatus(`logged in as ${username}`); 
+            setTimeout( checkLoginStatus, 5000 ); 
         })
         .catch( err => {
-            updateStatus(errMsgs[err.error] || err.error);
+            usernameEl.value = '';
+            updateStatus( Object.values(err));
         });
     });
 }
 
-export const renderTodos = function(todos) {
-    const todoListEl = document.querySelector('#todo-app .todos');
-    var a= function(){
-        console.log(123)
-    }
-    const html = todos.map( (todo, index) => { 
-        console.log("In render", todo, todo["priority"]);
-       
-        // // let a= deleteTodo()
-        // let s= '<li><button class="delete">X</button></li>';
-        // return s
+function renderTodos(todos) {
+    todoTemp = todos;
+    const html = todos.map( (todo) => { 
+        // console.log("In render", todo, todo.priority);
         return `
             <li>
-                <span class="delete" data-index=${index}>X</span>
-                <span class="task" data-index=${index}>${todo.task}</span>
+                <span class="delete" data-index=${todo.id}>X</span>
+                <span class="task" data-index=${todo.id}>${todo.task}</span>
                 <span class="colon">:</span>
-                <button class="degrade" data-index=${index}>-</button>
-                <span class="priority" data-index=${index}>${todo.priority}</span>
-                <button class="upgrade" data-index=${index}>+</button>
+                <button class="degrade" data-index=${todo.id}>-</button>
+                <span class="priority" data-index=${todo.id}>${todo.priority}</span>
+                <button class="upgrade" data-index=${todo.id}>+</button>
             </li>
         `;
     }).join('');
-    console.log(todoListEl);
     todoListEl.innerHTML = html;
-    deleteTodo();
 }
 
-export const errMsgs = {
-
-}
-
-export const updateStatus = function( screenMsgs ) {
-    const status = document.querySelector('#todo-app .status')
-    // console.log(typeof status);
+function updateStatus( screenMsgs ) {
     status.innerHTML = screenMsgs;
 }
 
-export const addNewTodo = function() {
-    const addButtonEl = document.querySelector('#add-todo .add');
-    const taskEl = document.querySelector('#add-todo .task');
-    const priorityEl = document.querySelector('#add-todo .priority');
+function addNewTodo() {
     addButtonEl.addEventListener('click', (e) => {
         const task = taskEl.value;
-        const prio = priorityEl.value;
+        const prio = parseInt(priorityEl.value);
+        if (!task || !prio ) {
+            addButtonEl.disabled = false;
+            return;
+        }
         callToAddNewTodo( task, prio )
         .then( (todos) => { 
             taskEl.value ='';
             priorityEl.value ='';
+            todoTemp = todos;
+            rankTodos( );
             renderTodos( todos );
+            updateStatus(`Successfully add new todo`);
         })
         .catch( err => {
-            updateStatus(errMsgs[err.error] || err.error);
+            updateStatus( errMsgs[err.error] || err.error);
         });
         
     })
 }
 
-export const deleteTodo = function() {
-
-    const todoListEl = document.querySelector('#todo-app .todos');
-    // const deleteButtonEl = document.querySelectorAll('.delete')
-    console.log(deleteButtonEl);
+function deleteTodo() {  //minor fix
     todoListEl.addEventListener('click', (e) => {
-        console.log(123);
         if (!e.target.classList.contains('delete')) {
             return;
         } else {
             const index = e.target.dataset.index;
             callToDeleteTodo( index )
             .then( (todos) => {
-                renderTodos( todos );
+                todoTemp = todos;
+                rankTodos( );
+                renderTodos( todoTemp );
                 updateStatus(`Successfully delete a todo`);
-                // delete 
+                
             })
             .catch( err => {
                 updateStatus(errMsgs[err.error] || err.error);
@@ -123,56 +136,63 @@ export const deleteTodo = function() {
     })
 }
 
-export const updateTodoPriority = function() {
-    const todoListEl = document.querySelector('#todo-app .todos');
+function updateTodoPriority() {
     todoListEl.addEventListener('click', (e) => {
         const index = e.target.dataset.index;
+        let newPriority = parseInt(e.target.parentElement.querySelector("#todo-app .priority").innerText)
         if (e.target.classList.contains('degrade')) {
-
+            if ( newPriority > 1) {
+                newPriority = newPriority-1;
+                callToChangeTodoPriority(index, newPriority)
+                .then( (changedTodo) => { 
+                    todoTemp.map( (todo,index) => {
+                        if(todo.id === changedTodo[0].id){
+                            todoTemp[index]= changedTodo[0];
+                        }
+                    })
+                    rankTodos( );
+                    renderTodos( todoTemp );
+                    updateStatus(`Degrade a todo`);
+                })
+            }
         } else if (e.target.classList.contains('upgrade') ) {
-        //     if ()
-        }
+            if ( newPriority < 5) {
+                newPriority = newPriority+1;
+                callToChangeTodoPriority(index, newPriority)
+                .then( (changedTodo) => { 
+                    todoTemp.map( (todo,index) => {
+                        if(todo.id === changedTodo[0].id){
+                            todoTemp[index]= changedTodo[0]
+                        }
+                    })
+                    rankTodos(  );
+                    renderTodos( todoTemp );
+                    updateStatus(`Upgrade a todo`);
+                })
+            }
+        } else return; 
     });
 }
 
-export const rankTodos = function( ) {
-
+function rankTodos( ) {
+    todoTemp.sort( (a,b) => {
+        return b.priority-a.priority;
+    })
 }
 
-// const timerEl = document.querySelector('.timer');
-
-//   const setTimer = (endAt) => {
-//     const totalSeconds  = Math.max( 0, endAt - Math.floor(Date.now()/1000) );
-//     const secondsLeft = totalSeconds % 60;
-//     const minsLeft = (totalSeconds - secondsLeft)/60;
-//     timerEl.innerText = `${minsLeft}:${secondsLeft.toString().padStart(2,'0')}`;
-//   };
-
-//   const updateTimer = () => {
-//     // No error checking shown, but should be present on real code
-//     return fetch('/api/controls', {
-//       method: 'GET',
-//     })
-//     .then( response => response.json() )
-//     .then( controls => setTimer(controls.timer.endAt) )
-//     .then( setTimeout( updateTimer, 5000) );
-//   };
-
-//   updateTimer();
-
-//   const setTimerButton = document.querySelector('.set-timer');
-//   setTimerButton.addEventListener('click', () => {
-//     const setTo = document.querySelector('.timer').value;
-//     setTimerButton.disabled = true;
-//     fetch('/api/controls/timer', {
-//       method: 'POST',
-//       headers: new Headers({
-//         'content-type': 'application/json',
-//       }),
-//       body: JSON.stringify({timer: setTo}),
-//     })
-//     .finally( () => {
-//       setTimerButton.disabled = false;
-//     });
-//   });
-
+function changeRanking( ) { 
+    let sortFlag = true;
+    sortEle.addEventListener("click",()=>{
+        if(sortFlag){
+            todoTemp.sort( (a,b) => {
+                return a.priority-b.priority;
+            })   
+        } else {
+            todoTemp.sort( (a,b) => {
+                return b.priority-a.priority;
+            })   
+        }
+        sortFlag =!sortFlag;
+        renderTodos(todoTemp);
+    })
+}
