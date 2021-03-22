@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo-list</title>
+    <link rel="stylesheet" href="todo.css">
+</head>
+<body>
+    <h1>Todo</h1>
+    
+    <div id="todo-app">
+        <div class="login hidden">
+        <label>Username:<input type="text"></label>
+        <button>Log in</button>
+        </div>
+
+        <div class="logged-in hidden">
+            <div id="user"></div>
+            <div class="header">
+                <span class="task">TASK</span>
+                <span class="priority">Priority(low to high from 1-5)</span>
+            </div>
+        <ul class="todos">
+        </ul>
+        <div id="sortBtn"><button>Rank again</button></div>
+        </div>
+
+        <div class="status"></div>
+    </div>
+
+    <div id="add-todo">Task:
+        <input class="task">
+        <select class="priority">Priority(1-5 from low to high):
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <button class="add">Add into todo-list</button>
+    </div>
+
+    <script src="web.js"></script>
+</body>
+</html>

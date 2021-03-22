@@ -1,0 +1,38 @@
+h1 {
+    text-align: center;
+}
+
+#todo-app .todos {
+    line-height: 180%
+}
+
+#todo-app li:nth-child(even) {
+    background-color: antiquewhite;
+}
+
+
+#todo-app .task {
+    width: 30%;
+    display: inline-block;
+    text-align:right
+}
+
+#todo-app .delete {
+    margin-right: 10px;
+    font-weight: bolder;
+    background: orange;
+    cursor: pointer;
+}
+
+#todo-app .priority {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#sortBtn {
+    text-align: center;
+}
+
+.hidden{
+    display: none;
+}
