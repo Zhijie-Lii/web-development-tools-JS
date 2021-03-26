@@ -1,0 +1,25 @@
+h1 {
+    text-align: center;
+}
+
+#recipe-app .login, .logout{
+    text-align: right;
+}
+
+#recipe-app .recipes{
+    width: 30%;
+    display: inline-block;
+    text-align:right
+}
+
+#recipe-app li:nth-child(even) {
+    background-color: antiquewhite;
+}
+
+#recipe-app .add-recipe {
+    display: inline;
+}
+
+.hidden {
+    display: none;
+}

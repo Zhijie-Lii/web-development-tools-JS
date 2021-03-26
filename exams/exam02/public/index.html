@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe</title>
+    <link rel="stylesheet" href="recipe.css">
+</head>
+<body>
+    <h1>Gourmet Key</h1>
+
+    <div id="recipe-app">
+        <div class="login">
+            <label>Log in as:<input type="text"></label>
+            <button>Input Username</button>
+        </div>
+
+        <div class="logged-in hidden"></div>
+
+        <div class="logout hidden">
+            <button>Logout</button>
+        </div>
+
+        <div class="recipes">
+            <ol></ol>
+        </div><br>
+
+        <div class="add-recipe hidden">
+            <label>Title:<input class="title"></label><br>
+            Ingredients:<textarea class="ingre" rows="5" cols="30"></textarea><br>
+            Instrument:<textarea class="instru" row="10" cols="30"></textarea>
+            <button class="add">Add a new recipe!</button>
+        </div>
+    </div>
+    <script src="web.js"></script>
+</body>
+</html>
