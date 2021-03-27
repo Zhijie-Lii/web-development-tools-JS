@@ -1,6 +1,7 @@
 import {
     loadRecipes,
-    performLogin
+    performLogin,
+    addRecipeCallback
 } from './services';
 
 const recipeListEl = document.querySelector('#recipe-app .recipes');
@@ -13,8 +14,10 @@ const addIngreEl = document.querySelector('#recipe-app .add-recipe.ingre');
 const addInstruEl = document.querySelector('#recipe-app .add-recipe.instru');
 const addButtonEl = document.querySelector('#recipe-app .app-recipe button');
 
+//  preventDefault();
 loadRecipes();
 addLogin();
+addRecipe();
 
 function showLoggedinContent() {
     usernameEl.classList.add('hidden');
@@ -41,11 +44,25 @@ function addLogin() {
 function renderRecipes(recipes) {
     recipeState = recipes;
     const html = recipeState.map( recipe => {
-
+        return`
+            <li>
+                <a data-index=${recipe.id} href="">${recipe.title}</a>
+                <span data-index=${recipe.id}>${recipe.author}</a>
+            </li>
+        `;
     }).join('');
     recipeListEl.innerHTML = html;
 }
 
 function addRecipe() {
+    checkLoginStatus();
+    addButtonEl.addEventListener('click', (e) => {
+        if (!addTitleEl.value && !addIngreEl && !addInstruEl){
+            addButtonEl.disabled = false;
+        }
+        e.target.classList = 
+        addRecipeCallback( );
+        preventDefault();
+    });
 
 }

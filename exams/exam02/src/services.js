@@ -1,5 +1,5 @@
 export const loadRecipes = function() {
-    return fetch('/session', {
+    return fetch('/recipes', {
         method: 'GET',
     })
     .catch( () => {
@@ -33,9 +33,14 @@ export const performLogin = function( username ) {
     });
 };
 
-export const callToAddRecipe = function() {
+export const addRecipeCallback = function() {
     return fetch('/recipe', {
         method: 'POST',
-        
+        headers: new Headers({
+            'content-type': 'application/json',
+        }),
+        body: JSON.stringify({
+
+        })
     })
 }
