@@ -1,7 +1,9 @@
+import './App.css';
+
 const Answer = ({result}) => {
-    
+
     return (
-        <div>{result}</div>
+        <div className="Answer">{result}</div>
     );
 };
 

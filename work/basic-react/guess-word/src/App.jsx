@@ -20,7 +20,7 @@ function App( ) {
         <input type="text" onChange={(e) => setGuess(e.target.value)}/>
         <button onClick={compareAgain}>Enter</button>
         <br/>
-        <Answer className="Answer" result={result}/>
+        <Answer result={result}/>
         </header>
     </div>
   );
