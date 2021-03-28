@@ -19,9 +19,4 @@ const recipesData = [
     },
 ]
 
-const userInfo = {
-    //no need for record sessions or sid
-
-}
-
 module.exports = recipesData;

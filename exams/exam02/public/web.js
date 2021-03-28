@@ -12,7 +12,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "loadRecipes": () => (/* binding */ loadRecipes),
 /* harmony export */   "performLogin": () => (/* binding */ performLogin),
-/* harmony export */   "addRecipeCallback": () => (/* binding */ addRecipeCallback)
+/* harmony export */   "addRecipeCallback": () => (/* binding */ addRecipeCallback),
+/* harmony export */   "checkLoginStatus": () => (/* binding */ checkLoginStatus)
 /* harmony export */ });
 var loadRecipes = function loadRecipes() {
   return fetch('/recipes', {
@@ -62,6 +63,23 @@ var addRecipeCallback = function addRecipeCallback() {
       'content-type': 'application/json'
     }),
     body: JSON.stringify({})
+  });
+};
+var checkLoginStatus = function checkLoginStatus() {
+  return fetch('/session', {
+    method: 'GET'
+  })["catch"](function () {
+    return Promise.reject({
+      error: 'network-error'
+    });
+  }).then(function (response) {
+    if (response.ok) {
+      return response.json();
+    }
+
+    return response.json().then(function (err) {
+      return Promise.reject(err);
+    });
   });
 };
 
