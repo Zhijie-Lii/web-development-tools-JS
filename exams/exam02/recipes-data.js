@@ -1,6 +1,6 @@
-const recipesData = [ 
-    {
-        name: "Juicy Roasted Chicken",
+const recipesData = {
+    1: {
+        title: "Juicy Roasted Chicken",
         author: "ROBINROCKINGBIRD",
         ingredient: "1 (3 pound) whole chicken ,salt and black pepper,\
         1 tablespoon onion powder, 1/2 cup divided margarine,  \
@@ -8,15 +8,36 @@ const recipesData = [
         instruction: "Step 1: Preheat oven to 175 degrees C.\
         Step 2: Place in a roasting pan, and season generously inside and out with salt and pepper.\
         Step 3: Bake uncovered 1 hour and 15 minutes in the preheated oven",
-        id:'',
+        id: 1,
     },
-    {
-        name: "taste of home",
+    2: {
+        title: "Taste of home",
         author: "me",
         ingredient: "500g noodles, a spoon of seasame paste, hot water",
         instruction: "boil it out",
-        id: '002'
+        id: 2,
     },
-]
+    3 : {
+        title: "milk oats",
+        author: "anonymous",
+        ingredient: "milk and oats, oven maybe",
+        instruction: "pour the milk, heat.",
+        id: 3,
+    },
+    4 : {
+    
+        title: "U77",
+        author: "Eason",
+        ingredient: "vocal",
+        instruction: "Music is the key to heart.",
+        id: 4,
+    }
+}
 
-module.exports = recipesData;
+const id = 4;
+
+function getId() {
+    return id++;
+}
+
+module.exports = {recipesData, getId};

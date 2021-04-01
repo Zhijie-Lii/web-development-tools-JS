@@ -2,18 +2,24 @@ h1 {
     text-align: center;
 }
 
-#recipe-app .login, .logout{
+#recipe-app .login, .logout, .logged-in{
     text-align: right;
 }
 
-#recipe-app .recipes{
+#recipe-app .recipes .recipe-title{
+    width: 40%;
+    display: inline-block;
+    text-align:left;
+}
+
+#recipe-app .recipes .author{
     width: 30%;
     display: inline-block;
-    text-align:right
+    text-align:left;
 }
 
 #recipe-app li:nth-child(even) {
-    background-color: antiquewhite;
+    background-color:khaki;
 }
 
 #recipe-app .add-recipe {
