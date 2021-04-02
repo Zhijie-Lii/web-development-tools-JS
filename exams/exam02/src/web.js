@@ -7,7 +7,7 @@ export const showLoggedinContent = function( {username} ) {
     loggedinStatusEl.classList.remove('hidden');
     logoutEl.classList.remove('hidden');
     document.querySelector('#recipe-app .add-recipe').classList.remove('hidden');
-    loggedinStatusEl.innerHTML = `author: ${username}`;
+    loggedinStatusEl.innerHTML = `name: ${username}`;
 };
 
 export const showContentWithoutLogin = function() {

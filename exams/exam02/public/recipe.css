@@ -26,11 +26,21 @@ h1 {
     background-color:khaki;
 }
 
-#recipe-app .add-recipe label {
+#recipe-app .add-recipe {
+    vertical-align: baseline;
+}
+
+#recipe-app .add-recipe label, .recipe-detail label {
     display: inline-block;
-    width: 6em;
-    text-align: right;
+    background-color: sandybrown;
+    width: 15%;
+    text-align: center;
     vertical-align: top;
+    font-style: italic;
+}
+
+#recipe-app .recipe-detail {
+    background-color: gold;
 }
 
 .hidden {

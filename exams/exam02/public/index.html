@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="recipe.css">
 </head>
 <body>
-    <h1>Gourmet Key</h1>
+    <h1>Gourmet Key<br>
+    孤独的美食家</h1>
 
     <div id="recipe-app">
         <div class="login">
@@ -22,17 +23,18 @@
             <button>Logout</button>
         </div>
 
+        <div class="user-status"></div>
+
         <div id="mainContent">
             <ol class="recipes"></ol>
             <div class="add-recipe hidden">
                 <label>Title:</label><input class="title"><br>
                 <label>Ingredients:</label><textarea class="ingre" rows="5" cols="30"></textarea><br>
-                <label>Instrument:</label><textarea class="instru" rows="10" cols="30"></textarea>
-                <button class="add">Add a new recipe!</button>
+                <label>Instrument:</label><textarea class="instru" rows="10" cols="30"></textarea><br>
+                <button class="add">Add a new recipe by yourself!</button>
             </div>
         </div>
         <div class="recipe-detail"></div>
-        <div class="user-status"></div>
 
        
     </div>

@@ -20,7 +20,7 @@ app.get('/recipes/:recipeId', express.json(), (req, res) => {
         res.status(401).json({ error: 'You click on wrong item'});
         return;
     }
-    res.status(200).json(recipesData[id]);
+    res.status(200).json(recipesData.recipesData[id]);
 });
 
 app.get('/session', (req, res) => {
@@ -52,7 +52,6 @@ app.post('/session', express.json(), (req, res) => {
 
 app.delete('/session', express.json(), (req, res) => {
     const sid = req.cookies.sid;
-    console.log('to logout')
     res.clearCookie('sid');
     delete session[sid];
 
@@ -63,7 +62,6 @@ app.post('/recipe', express.json(), (req, res) => {
     const sid = req.cookies.sid;
     console.log(req.body.title)
     let {title, ingredient, instruction} = req.body;
-    console.log(recipesData)
     const newId = recipesData.getId()
     console.log(session[sid].username)
     const newItem = {

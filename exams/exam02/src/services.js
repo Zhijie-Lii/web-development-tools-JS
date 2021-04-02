@@ -64,7 +64,6 @@ export const performLogout = function() {
         if (response.ok) {
             return response.json();
         }
-        console.log('too')
         return response.json().then( err => Promise.reject(err) );
     });
 };

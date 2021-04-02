@@ -91,7 +91,6 @@ var performLogout = function performLogout() {
       return response.json();
     }
 
-    console.log('too');
     return response.json().then(function (err) {
       return Promise.reject(err);
     });
@@ -162,7 +161,7 @@ var showLoggedinContent = function showLoggedinContent(_ref) {
   loggedinStatusEl.classList.remove('hidden');
   logoutEl.classList.remove('hidden');
   document.querySelector('#recipe-app .add-recipe').classList.remove('hidden');
-  loggedinStatusEl.innerHTML = "author: ".concat(username);
+  loggedinStatusEl.innerHTML = "name: ".concat(username);
 };
 var showContentWithoutLogin = function showContentWithoutLogin() {
   loginEl.classList.remove('hidden');
@@ -252,10 +251,10 @@ var recipeState = {};
 var recipeNumber = 0;
 (0,_services__WEBPACK_IMPORTED_MODULE_0__.checkLoginStatus)().then(function (username) {
   (0,_web__WEBPACK_IMPORTED_MODULE_1__.showLoggedinContent)(username);
+  console.log('with login');
   displayRecipes();
 })["catch"](function (err) {
   (0,_web__WEBPACK_IMPORTED_MODULE_1__.showContentWithoutLogin)();
-  console.log('hiddd the fuc');
   displayRecipes();
 });
 addLogin();
@@ -321,24 +320,29 @@ function jumpToRecipeDetails() {
       (0,_services__WEBPACK_IMPORTED_MODULE_0__.fetchRecipeDetail)(recipeId).then(function (recipeDetail) {
         showRecipeDetail(recipeDetail);
         backToMainPage();
+      })["catch"](function (err) {
+        updateStatus(err);
       });
     }
+
+    ;
   });
 }
 
 function showRecipeDetail(recipeDetail) {
-  console.log('recipe detail');
-  var html = "\n        <span> <label>Recipe Title:</label>".concat(recipeDetail.title, " </span>\n        <span> <label>Recipe Author:</label>").concat(recipeDetail.author, " </span>\n        <span> <label>Recipe Ingredient:</label>").concat(recipeDetail.ingredient, " </span>\n        <span> <label>Recipe Instruction:</label>").concat(recipeDetail.instruction, " </span>\n        <button class=\"back\">Back</button>");
-  mainContentEl.classList.add("hidden");
-  recipeDetailEl.innerHTML = html;
+  var html = "\n        <p><label>Recipe Title:</label>".concat(recipeDetail.title, " </p>\n        <p><label>Author:</label>").concat(recipeDetail.author, " </p>\n        <p><label>Ingredient:</label>").concat(recipeDetail.ingredient, " </p>\n        <p><label>Instruction:</label>").concat(recipeDetail.instruction, " </p>\n        <br/><button class=\"back\">Back</button>");
+  mainContentEl.classList.add('hidden');
+  recipeDetailEl.innerHTML = html; // backToMainPage();
 }
 
 function backToMainPage() {
-  console.log('main page');
   var backButton = document.querySelector('.recipe-detail button');
   backButton.addEventListener('click', function (e) {
     e.preventDefault();
     renderRecipes(recipeState);
+    mainContentEl.classList.remove('hidden');
+    recipeDetailEl.classList.add('hidden');
+    console.log('back there');
   });
 }
 
@@ -346,7 +350,6 @@ function addRecipe() {
   (0,_services__WEBPACK_IMPORTED_MODULE_0__.checkLoginStatus)();
   addButtonEl.addEventListener('click', function (e) {
     e.preventDefault();
-    console.log('where fail');
 
     if (!addTitleEl.value || !addIngreEl.value || !addInstruEl.value) {
       updateStatus('fulfill the whole items first'); // addButtonEl.disabled = false;
@@ -359,7 +362,9 @@ function addRecipe() {
       recipeState[newRecipe.id] = newRecipe;
       showRecipeDetail(newRecipe);
       recipeState[recipeNumber] = newRecipe;
-      console.log(recipeState, recipeNumber);
+      addTitleEl.value = '';
+      addIngreEl.value = '';
+      addInstruEl.value = '';
     })["catch"](function (err) {
       updateStatus(err);
     });
