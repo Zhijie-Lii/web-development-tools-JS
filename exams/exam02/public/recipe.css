@@ -10,20 +10,27 @@ h1 {
     width: 40%;
     display: inline-block;
     text-align:left;
+    font-size:1.2em;
+    cursor: pointer;
 }
 
 #recipe-app .recipes .author{
     width: 30%;
     display: inline-block;
     text-align:left;
+    font-family: "Lucida Console", "Courier New", monospace;
+    color: crimson;
 }
 
 #recipe-app li:nth-child(even) {
     background-color:khaki;
 }
 
-#recipe-app .add-recipe {
-    display: inline;
+#recipe-app .add-recipe label {
+    display: inline-block;
+    width: 6em;
+    text-align: right;
+    vertical-align: top;
 }
 
 .hidden {

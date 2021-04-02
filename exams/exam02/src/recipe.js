@@ -1,7 +1,7 @@
 import {
     loadRecipes,
     performLogin, performLogout,
-    addRecipeCallback,
+    fetchRecipeDetail,addRecipeCallback,
     checkLoginStatus
 } from './services';
 
@@ -10,20 +10,18 @@ import {
     showContentWithoutLogin
 } from './web';
 
-const recipeListEl = document.querySelector('#recipe-app .recipes');
-const loginEl = document.querySelector('#recipe-app .login');
-const loggedinStatusEl = document.querySelector('#recipe-app .logged-in');
-const logoutEl = document.querySelector('#recipe-app .logout');
 const recipesListEl = document.querySelector('#recipe-app .recipes');
 const recipeDetailEl = document.querySelector('#recipe-app .recipe-detail');
+const mainContentEl = document.querySelector('#mainContent');
 const userStatusEl = document.querySelector('#recipe-app .user-status')
 
-const addTitleEl = document.querySelector('#recipe-app .add-recipe.title');
-const addIngreEl = document.querySelector('#recipe-app .add-recipe.ingre');
-const addInstruEl = document.querySelector('#recipe-app .add-recipe.instru');
-const addButtonEl = document.querySelector('#recipe-app .app-recipe button');
+const addTitleEl = document.querySelector('#recipe-app .add-recipe .title');
+const addIngreEl = document.querySelector('#recipe-app .add-recipe .ingre');
+const addInstruEl = document.querySelector('#recipe-app .add-recipe .instru');
+const addButtonEl = document.querySelector('#recipe-app .add-recipe button');
 
 let recipeState = {};
+let recipeNumber=0;
 
 checkLoginStatus()
 .then( (username) => {
@@ -32,11 +30,14 @@ checkLoginStatus()
 })
 .catch( err => {
     showContentWithoutLogin();
+    console.log('hiddd the fuc')
     displayRecipes();
 })
 
 addLogin();
 addLogout();
+
+jumpToRecipeDetails();
 
 function displayRecipes() {
     loadRecipes()
@@ -49,16 +50,18 @@ function displayRecipes() {
 
 function renderRecipes(recipes) {
     recipeState = recipes;
-    const html = recipeState.map( recipe => {
+    
+    const html = Object.values(recipeState).map( recipe => {
+        recipeNumber++;
         return`
             <li>
-                <a data-index=${recipe.id}  class="recipe-title">${recipe.title}</a>
+                <a data-index=${recipe.id} class="recipe-title">${recipe.title}</a>
                 <span data-index=${recipe.id} class="author">${recipe.author}</span>
             </li>
         `;
     }).join('');
     console.log('finish render');
-    recipeListEl.innerHTML = html;
+    recipesListEl.innerHTML = html;
 }
 
 function updateStatus( msg ) {
@@ -74,10 +77,10 @@ function addLogin() {
         performLogin(username)
         .then( (username) => {
             console.log('perform login');
+            usernameEl.value = '';
             showLoggedinContent(username);
-            
             addRecipe();
-            jumpToRecipeDetails();
+            
             updateStatus('username loggedin.')
         })
         .catch( err => {
@@ -88,11 +91,10 @@ function addLogin() {
 
 function addLogout() {
     const logoutButtonEl = document.querySelector('#recipe-app .logout button');
-    console.log(logoutButtonEl);
     logoutButtonEl.addEventListener('click', () => {
         performLogout()
         .then( () => {
-            console.log('logout already');
+            updateStatus('Already logout')
             showContentWithoutLogin();
         })
         .catch( err => {
@@ -121,10 +123,10 @@ function showRecipeDetail(recipeDetail ) {
     const html = `
         <span> <label>Recipe Title:</label>${recipeDetail.title} </span>
         <span> <label>Recipe Author:</label>${recipeDetail.author} </span>
-        <span> <label>Recipe Ingrement:</label>${recipeDetail.ingre} </span>
-        <span> <label>Recipe Instruction:</label>${recipeDetail.instru} </span>
+        <span> <label>Recipe Ingredient:</label>${recipeDetail.ingredient} </span>
+        <span> <label>Recipe Instruction:</label>${recipeDetail.instruction} </span>
         <button class="back">Back</button>`
-    
+        mainContentEl.classList.add("hidden")
     recipeDetailEl.innerHTML = html;
 }
 
@@ -141,18 +143,22 @@ function addRecipe() {
     checkLoginStatus();
     addButtonEl.addEventListener('click', (e) => {
         e.preventDefault();
-        if (!addTitleEl.value && !addIngreEl.value && !addInstruEl.value){
+        console.log('where fail')
+        if (!addTitleEl.value || !addIngreEl.value || !addInstruEl.value){
             updateStatus('fulfill the whole items first');
             // addButtonEl.disabled = false;
             return;
         } 
+        console.log('to add')
         addRecipeCallback(addTitleEl.value, addIngreEl.value, addInstruEl.value)
         .then( (newRecipe) => {
             recipeState[newRecipe.id] = newRecipe;
             showRecipeDetail( newRecipe );
+            recipeState[recipeNumber] = newRecipe;
+            console.log(recipeState, recipeNumber)
         })
         .catch( (err) => {
-            updateStatus( err );
+            updateStatus( (err) );
         })
     });
 }

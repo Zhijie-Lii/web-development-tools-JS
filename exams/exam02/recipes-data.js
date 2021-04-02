@@ -1,7 +1,7 @@
 const recipesData = {
     1: {
         title: "Juicy Roasted Chicken",
-        author: "ROBINROCKINGBIRD",
+        author: "RobinRockingBird",
         ingredient: "1 (3 pound) whole chicken ,salt and black pepper,\
         1 tablespoon onion powder, 1/2 cup divided margarine,  \
         1 stalk celery, leaves removed ",
@@ -34,10 +34,13 @@ const recipesData = {
     }
 }
 
-const id = 4;
 
 function getId() {
-    return id++;
+    let count= 0 ;
+    for(key in recipesData){
+        count++;
+    }
+    return ++count;
 }
 
 module.exports = {recipesData, getId};

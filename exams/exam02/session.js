@@ -2,9 +2,9 @@ const uuidv4 = require('uuid').v4;
 
 const session = { };
 
-const isValidSession = function(sid) {
-    return session[sid];
-}
+// const isValidSession = function(sid) {
+//     return session[sid];
+// }
 
 const validUsername = function(username){
     const usernameErrors = [];
@@ -13,11 +13,11 @@ const validUsername = function(username){
     if (clean!==username) {
         usernameErrors.push('Invalid character. Try again');
     }
-    if (username=="dog") {
+    if (username.search("dog")!==-1) {
         usernameErrors.push('Dog drools. Return a cat name');
     }
     if (!username) {
-        usernameErrors.push('No entry!');
+        usernameErrors.push('No input!');
     }
 
     return usernameErrors.length ? usernameErrors : '';
@@ -33,7 +33,6 @@ const createSession = function(username) {
 
 module.exports = {
 	session,
-	isValidSession,
     validUsername,
 	createSession,
 };

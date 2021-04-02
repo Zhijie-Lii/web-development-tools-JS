@@ -22,16 +22,19 @@
             <button>Logout</button>
         </div>
 
-        <div><ol class="recipes"></ol></div>
+        <div id="mainContent">
+            <ol class="recipes"></ol>
+            <div class="add-recipe hidden">
+                <label>Title:</label><input class="title"><br>
+                <label>Ingredients:</label><textarea class="ingre" rows="5" cols="30"></textarea><br>
+                <label>Instrument:</label><textarea class="instru" rows="10" cols="30"></textarea>
+                <button class="add">Add a new recipe!</button>
+            </div>
+        </div>
         <div class="recipe-detail"></div>
         <div class="user-status"></div>
 
-        <div class="add-recipe hidden">
-            <label>Title:<input class="title"></label><br>
-            Ingredients:<input class="ingre"><br>
-            Instrument:<textarea class="instru" row="15" cols="30"></textarea>
-            <button class="add">Add a new recipe!</button>
-        </div>
+       
     </div>
     <script src="recipe.js"></script>
 </body>

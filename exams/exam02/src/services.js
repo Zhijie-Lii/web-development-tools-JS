@@ -60,9 +60,11 @@ export const performLogout = function() {
         return Promise.reject( { error: 'network-error'});
     })
     .then( response => {
+        console.log('goo')
         if (response.ok) {
             return response.json();
         }
+        console.log('too')
         return response.json().then( err => Promise.reject(err) );
     });
 };
@@ -77,7 +79,7 @@ export const addRecipeCallback = function( title, ingre, instru ) {
             title: title,
             ingredient: ingre,
             instruction: instru,
-        })
+        }),
     })
     .catch( () => {
         return Promise.reject( { error: 'network-error'});
