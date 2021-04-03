@@ -1,9 +1,9 @@
-function Play() {
+function Play({ setPlayer }) {
   return (
     <div>
-      <button>Rock</button>
-      <button>Paper</button>
-      <button>Scissors</button>
+      <button onClick={ () => setPlayer('Rock') }>Rock</button>
+      <button onClick={ () => setPlayer('Paper') }>Paper</button>
+      <button onClick={ () => setPlayer('Scissors') }>Scissors</button>
     </div>
   );
 };
