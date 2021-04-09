@@ -14,7 +14,7 @@ const catFact = [
     "A cat has more bones than a human being; humans have 206 and the cat has 230 bones.",
     "A cat has two vocal chords, and can make over 100 sounds.",
     "A cat lover is called an Ailurophilia (Greek: cat+lover).",
-    "A cat named Dusty, aged 1 7, living in Bonham, Texas, USA, gave birth to her 420th kitten on June 23, 1952.",
+    "A cat named Dusty, aged 17, living in Bonham, Texas, USA, gave birth to her 420th kitten on June 23, 1952.",
     "A cat rubs against people not only to be affectionate but also to mark out its territory with scent glands around its face.The tail area and paws also carry the cat’s scent.",
     "A cat sees about 6 times better than a human at night, and needs 1/6 the amount of of light that a human does - it has a layer of extra reflecting cells which absorb light.",
     "A cat uses its whiskers for measuring distances.  The whiskers of a cat are capable of registering very small changes in air pressure.",
@@ -31,3 +31,5 @@ const catFact = [
     "A cat’s back is extremely flexible because it has up to 53 loosely fitting vertebrae. Humans only have 34.",
     "A cat’s brain is biologically more similar to a human brain than it is to a dog’s. Both humans and cats have identical regions in their brains that are responsible for emotions.",
 ]
+
+module.exports = catFact;
