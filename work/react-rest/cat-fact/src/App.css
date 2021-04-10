@@ -4,27 +4,28 @@
 
 #app .fact-content {
   background-color: azure;
-  min-height: 70vh;
+  min-height: 60vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content:center;
+  /* justify-content:center; */
 }
 
-#app .loadButton {
+.notLoaded  {
+  background-color: orange;
+  position: fixed;  
+  top: 30%;
+  left: 40%;
+}
+
+.notLoaded .isLoading {
   text-align: center;
 }
-/* 
-#app .loader {
-  border: 16px solid #f3f3f3; 
-  border-top: 16px solid #3498db; 
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
+
+#app select {
+  float: right;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-} */
+#app .factAdjust, .spinner {
+  text-align: center;
+}
