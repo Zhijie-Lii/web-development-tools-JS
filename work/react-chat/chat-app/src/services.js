@@ -1,3 +1,7 @@
+export const checkSession = function() {
+    
+}
+
 export const fetchLogin = function() {
     return fetch('session', {
         method: 'POST'
