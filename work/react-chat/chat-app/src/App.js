@@ -8,6 +8,8 @@ function App() {
     isPending: true,
   });
 
+  let messages = [];
+
   useEffect( () => {
     checkSession()
     .then( userinfo => {
@@ -20,8 +22,8 @@ function App() {
     })
     .catch( () => {
       
-    })
-  })
+    });
+  }, [messages] );
   return (
     <div className="App">
       <header className="App-header">

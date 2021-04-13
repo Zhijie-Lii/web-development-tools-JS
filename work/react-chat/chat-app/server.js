@@ -3,6 +3,7 @@ const app = express();
 const PORT = 5000;
 const cookieParser = require('cookie-parser');
 const session = require('./session');
+const chat = require('./chat');
 
 app.use(express.static('./build'));
 app.use(expressexpress.json());
