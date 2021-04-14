@@ -13,7 +13,7 @@ export const checkSession = function() {
     });
 }
 
-export const createSession = function() {
+export const createSession = function({ username }) {
     return fetch('/api/session', {
         method: 'POST',
         headers: new Headers({

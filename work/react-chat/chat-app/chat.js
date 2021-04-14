@@ -23,5 +23,6 @@ function addMesssage({ sender, text }){
 
 const chat = {
     messages,
+    addMesssage
 }
 module.exports = chat;

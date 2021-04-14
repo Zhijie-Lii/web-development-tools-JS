@@ -1,5 +1,8 @@
 import { React, useState, useEffect, useReducer } from 'react';
-import {checkSession} from './services';
+import { checkSession, endSession } from './services';
+import Nav from './Nav';
+import ShowMessages from './ShowMessages';
+import Login from './Login';
 import './App.css';
 
 function App() {
@@ -30,7 +33,7 @@ function App() {
         isPending: false,
       });
     });
-  }, [messages]); // only run on initial render
+  }, []); //  messages only run on initial render
 
   const login = function({username, info}) {
     setUserState({
@@ -75,7 +78,7 @@ function App() {
   let chatPage;
 
   if(userState.isLoggedIn) {
-    chatPage = <ShowMessages messages={userinfo.info}/>;
+    chatPage = <ShowMessages messages={userState.info}/>;
   } else {
     chatPage = <Login onLogin={login}/>;
   }
