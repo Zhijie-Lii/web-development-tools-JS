@@ -6,7 +6,7 @@ const session = require('./session');
 const chat = require('./chat');
 
 app.use(express.static('./build'));
-app.use(expressexpress.json());
+app.use(express.json());
 app.use(cookieParser());
 
 app.get('/api/session/messages', (req, res) => {
@@ -15,24 +15,25 @@ app.get('/api/session/messages', (req, res) => {
         res.status(401).json({ error: 'session-required'});
         return;
     }
-    if(session.isValidSession(sid) ) {
-        res.status(200).json(session.details[sid]);
+    if(!session.isValidSession(sid) ) {
+        res.status(403).json({ error: 'session-invalid'});
         return; 
     }
-    res.status(403).json({ error: 'session-invalid'});
+    setTimeout((res.status(200).json(session.details[sid])),1500);
+    
 });
 
 app.post('/api/session', express.json(), (req, res) => {
     const { username } = req.body;
     
-    const errors = session.validUserName(username); 
-    if ( errors ) {
-        res.status(400).json({ errors });
+    const { error, sid } = session.create({username}); 
+    if ( error ) {
+        res.status(400).json({ error });
         return;
     } 
-    const sid = session.createSession(username);
+
     res.cookie('sid', sid);
-    // res.status(200).json(session[sid]);
+    res.status(200).json(session.details[sid]);
 });
 
 app.delete('/api/session', (req, res) => {
@@ -41,6 +42,14 @@ app.delete('/api/session', (req, res) => {
     res.clearCookie('sid');
     res.json({ sid, status: 'removed' });
   });
+
+app.get('/session/usersList',(req, res) => {
+
+});
+
+app.get('/session/messagesList',(req, res) => {
+    
+})
 
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}/`);

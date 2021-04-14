@@ -3,6 +3,8 @@ import { checkSession, endSession } from './services';
 import Nav from './Nav';
 import ShowMessages from './ShowMessages';
 import Login from './Login';
+import { reducer } from './reducer';
+import Loader from 'react-loader-spinner';
 import './App.css';
 
 function App() {
@@ -12,6 +14,10 @@ function App() {
   });
 
   let messages = [];
+  // const [state, dispatch] = useReducer(reducer, initState); 
+  // const setTheme = (e) => dispatch({
+  //   type: 'setTheme',
+  //   theme: e.target.value });
 
   useEffect( () => {
     checkSession()
@@ -70,7 +76,7 @@ function App() {
   if(userState.isPending) {
     return (
       <div className="app">
-        Loading...
+         <Loader type="Circles" color="#00BFFF" height={30} width={30}/>
       </div>
     );
   }
@@ -78,7 +84,7 @@ function App() {
   let chatPage;
 
   if(userState.isLoggedIn) {
-    chatPage = <ShowMessages messages={userState.info}/>;
+    chatPage = <ShowMessages />;
   } else {
     chatPage = <Login onLogin={login}/>;
   }
@@ -87,7 +93,9 @@ function App() {
     <div className="app">
       <Nav user={userState} onLogout={logout}/>
       {chatPage}
+      
     </div>
+    
   );
 }
 

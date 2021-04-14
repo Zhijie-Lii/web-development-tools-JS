@@ -22,7 +22,7 @@ const create = function({ username }) {
         return { error: 'username-invalid' };
     }
     const sid = uuid();
-    user[username] = users[username] || {
+    users[username] = users[username] || {
         nickname: "default",
         avatar: '',
         theme: 'light',

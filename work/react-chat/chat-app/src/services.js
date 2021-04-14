@@ -45,7 +45,17 @@ export const endSession = function() {
     });
 };
 
-export const fetchNewMessage = function() {
+export const fetchUsersList = function() {
+    return fetch('/session/messages', {
+        method: 'PATCH',
+        headers: new Headers({
+            'content-type': 'application/json',
+        }),
+        body: JSON.stringify({  }),
+    })
+};
+
+export const fetchMessagesList = function() {
     return fetch('/session/messages', {
         method: 'PATCH',
         headers: new Headers({
