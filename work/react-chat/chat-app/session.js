@@ -22,8 +22,12 @@ const create = function({ username }) {
         return { error: 'username-invalid' };
     }
     const sid = uuid();
-    user[username] = users[username] //stuff
-
+    user[username] = users[username] || {
+        nickname: "default",
+        avatar: '',
+        theme: 'light',
+        lastActive: Date.now(), //stuff
+    };
     sessions[sid] = {
         sid,
         username,
@@ -37,7 +41,7 @@ const remove = function(sid) {
     delete sessions[sid];
 };
 
-const isValid = function(sid) {
+const isValidSession = function(sid) {
     return !!sessions[sid];
 };
 
@@ -45,5 +49,5 @@ module.exports = {
     details: sessions,
     create,
     remove,
-    isValid,
+    isValidSession,
  };

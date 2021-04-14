@@ -8,7 +8,6 @@ const Login = function({ onLogin }) {
   const [status, setStatus] = useState('');
 
   const onChange = (e) => {
-    // setStatus('');
     setUsername(e.target.value);
     setIsDisabled(!e.target.value);
   };
