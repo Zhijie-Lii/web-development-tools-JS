@@ -43,11 +43,11 @@ app.delete('/api/session', (req, res) => {
     res.json({ sid, status: 'removed' });
   });
 
-app.get('/session/usersList',(req, res) => {
+app.get('/api/userList',(req, res) => {
 
 });
 
-app.get('/session/messagesList',(req, res) => {
+app.get('/api/messageList',(req, res) => {
     
 })
 

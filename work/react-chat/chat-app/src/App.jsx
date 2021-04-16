@@ -1,7 +1,8 @@
 import { React, useState, useEffect, useReducer } from 'react';
 import { checkSession, endSession } from './services';
 import Nav from './Nav';
-import ShowMessages from './ShowMessages';
+import Chat from './Chat';
+import DisplayChatBox from './DisplayChatBox';
 import Login from './Login';
 import { reducer } from './reducer';
 import Loader from 'react-loader-spinner';
@@ -39,7 +40,7 @@ function App() {
         isPending: false,
       });
     });
-  }, []); //  messages only run on initial render
+  }, []); // only run on initial render
 
   const login = function({username, info}) {
     setUserState({
@@ -53,7 +54,7 @@ function App() {
   const logout = function() {
     // Inform UI to wait
     setUserState({
-      ...userState,  // spread into array?
+      ...userState,  
       isPending: true,
     });
     // Begin logout
@@ -84,11 +85,12 @@ function App() {
   let chatPage;
 
   if(userState.isLoggedIn) {
-    chatPage = <ShowMessages />;
+    chatPage = <Chat />;
   } else {
     chatPage = <Login onLogin={login}/>;
   }
  
+  // check and switch Nav 
   return (
     <div className="app">
       <Nav user={userState} onLogout={logout}/>

@@ -1,5 +1,5 @@
 export const checkSession = function() {
-    return fetch('/api/session/messages', {
+    return fetch('/api/messages', {
         method: 'GET'
     })
     .catch( () => {
@@ -45,22 +45,45 @@ export const endSession = function() {
     });
 };
 
-export const fetchUsersList = function() {
-    return fetch('/session/messages', {
-        method: 'PATCH',
-        headers: new Headers({
-            'content-type': 'application/json',
-        }),
-        body: JSON.stringify({  }),
+export const fetchUserList = function() {
+    return fetch('/api/messages', {
+        method: 'GET',
     })
+    .catch( () => Promise.reject({ error: 'network-error'} ) )
+    .then( response => {
+        if(response.ok) {
+            return response.json();
+        }
+        return response.json().then( json => Promise.reject(json) );
+    });
 };
 
-export const fetchMessagesList = function() {
-    return fetch('/session/messages', {
+export const fetchMessageList = function() {
+    return fetch('/api/messages', {
+        method: 'GET',
+    })
+    .catch( () => Promise.reject({ error: 'network-error'} ) )
+    .then( response => {
+        if(response.ok) {
+            return response.json();
+        }
+        return response.json().then( json => Promise.reject(json) );
+    });
+}
+
+export const fetchNewMessage = function({newMessage}) {
+    return fetch('/api/messages', {
         method: 'PATCH',
         headers: new Headers({
             'content-type': 'application/json',
         }),
         body: JSON.stringify({  }),
     })
+    .catch( () => Promise.reject({ error: 'network-error'} ) )
+    .then( response => {
+        if(response.ok) {
+            return response.json();
+        }
+        return response.json().then( json => Promise.reject(json) );
+    });
 }
