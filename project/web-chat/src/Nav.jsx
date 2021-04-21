@@ -1,11 +1,4 @@
 const Nav = ({user, username, onTheme, onLogout}) => {
-    // const login = () => {
-    //     fetchLogin()
-    //     .then( () => onLogin() )
-    //     .catch( (err) => { 
-    //     })
-    // }
-
     
     if(!user.isLoggedIn) {
         return null;

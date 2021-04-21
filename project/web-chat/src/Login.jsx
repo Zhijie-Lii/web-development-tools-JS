@@ -28,7 +28,7 @@ const Login = function({ onLogin }) {
 
   return (
     <div className="header">
-      <h1>Chat-app</h1>
+      <h1>Join the webchat room</h1>
       { status && <div class="status">{status}</div>}
       <label>
         Username:
