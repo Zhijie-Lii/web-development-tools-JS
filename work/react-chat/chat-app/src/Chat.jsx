@@ -1,36 +1,52 @@
 import DisplayChatBox from "./DisplayChatBox";
 import { useState, useEffect } from 'react';
-import { fetchUserList, fetchMessageList } from './services';
+import { fetchUserList, fetchMessageList, fetchNewMessage, errorMessages } from './services';
 
-const Chat = ( ) => {
-    // const users = messages.map( key => {})
-    const[userList, setUserList] = useState([]);
-    const[messageList, setMessageList] = useState([]);
+const Chat = ({username, theme} ) => {
+    const [userList, setUserList] = useState([]);
+    const [messageList, setMessageList] = useState([]);
+    const [error, setError] = useState('');
+    const [text,setText] = useState('');
+
+    function addNewMessage(text) {
+      console.log(text, username)
+      fetchNewMessage( username, text )
+      .then( (newMessageList) => {
+        console.log(newMessageList);
+        setMessageList( newMessageList );
+      })
+      .catch( err => setError( errorMessages[err.code || 'DEFAULT'] ));
+    }
+
     
     useEffect( () => {
         fetchUserList()
-        .then( user => {
-            setUserList(user)
-        })
-        .catch( () => {
-          // We treat any failure as not logged in
-          
-        });
+        .then( user => setUserList(user) )
+        .catch( err =>
+          setError( errorMessages[err.code || 'DEFAULT'] )
+        );
 
         fetchMessageList()
         .then( message => {
-            setMessageList( message )
+          // console.log(message);
+          setMessageList( message );
           })
-          .catch( () => {
-            // We treat any failure as not logged in
+          .catch( (err) => {
             
+            setError( errorMessages[err.code || 'DEFAULT'] )
           });
       }, []);
 
     return (
-        <ul>
-            <DisplayChatBox userList={userList} messageList={messageList}>
-            </DisplayChatBox>
+        <ul className={theme}>
+            <DisplayChatBox userList={userList} messageList={messageList}></DisplayChatBox>
+            
+            <p className="error-msg">{error}</p>
+
+            <div className="outgoing">
+              <textarea rows="5" cols="30" onChange={(e) => setText(e.target.value)}></textarea>
+              <button onClick={addNewMessage}>Send</button>
+            </div>
         </ul>
     )
 }

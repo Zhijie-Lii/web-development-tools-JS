@@ -4,7 +4,7 @@ const users = {};
 const sessions = {};
 
 const isValidUsername = function( username ) {
-    if(!username) {
+    if(!username) { 
         return false;
     }
     const cleanUsername = username.replace(/[^a-zA-Z0-9_\-]/g, '');
@@ -24,7 +24,7 @@ const create = function({ username }) {
     const sid = uuid();
     users[username] = users[username] || {
         nickname: "default",
-        avatar: '',
+        avatar: 'www.avatar.com',
         theme: 'light',
         lastActive: Date.now(), //stuff
     };

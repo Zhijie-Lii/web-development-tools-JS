@@ -1,5 +1,5 @@
 export const checkSession = function() {
-    return fetch('/api/messages', {
+    return fetch('/api/session', {
         method: 'GET'
     })
     .catch( () => {
@@ -46,7 +46,7 @@ export const endSession = function() {
 };
 
 export const fetchUserList = function() {
-    return fetch('/api/messages', {
+    return fetch('/api/userList', {
         method: 'GET',
     })
     .catch( () => Promise.reject({ error: 'network-error'} ) )
@@ -59,8 +59,29 @@ export const fetchUserList = function() {
 };
 
 export const fetchMessageList = function() {
-    return fetch('/api/messages', {
+    return fetch('/api/messageList', {
         method: 'GET',
+    })
+    .catch( () => Promise.reject({ error: 'network-error'} ) )
+    .then( response => {
+        if(response.ok) {
+            return response.json( );
+        }
+        return response.json().then( json => Promise.reject(json) );
+    });
+}
+
+export const fetchNewMessage = function( username, text) {
+    return fetch('/api/messages', {
+        method: 'POST',
+        headers: new Headers({
+            'content-type': 'application/json',
+        }),
+        body: JSON.stringify({ 
+            sender: username, 
+            text,
+            timeStamp: Date.now(),
+        })
     })
     .catch( () => Promise.reject({ error: 'network-error'} ) )
     .then( response => {
@@ -71,19 +92,10 @@ export const fetchMessageList = function() {
     });
 }
 
-export const fetchNewMessage = function({newMessage}) {
-    return fetch('/api/messages', {
-        method: 'PATCH',
-        headers: new Headers({
-            'content-type': 'application/json',
-        }),
-        body: JSON.stringify({  }),
-    })
-    .catch( () => Promise.reject({ error: 'network-error'} ) )
-    .then( response => {
-        if(response.ok) {
-            return response.json();
-        }
-        return response.json().then( json => Promise.reject(json) );
-    });
-}
+export const errorMessages = {
+    DEFAULT: 'Oh no! Something went wrong, please try again',
+    USERNAME_REQUIRED: 'Username is required',
+    NETWORK_ERROR: 'There was a problem reaching your network, please try again', 
+    LOGIN_REQUIRED: 'You must be logged in to view this content', 
+    LOGIN_UNAUTHORIZED: 'You are not permitted to view this content',
+};

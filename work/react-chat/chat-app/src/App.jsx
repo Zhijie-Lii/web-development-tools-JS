@@ -1,8 +1,7 @@
-import { React, useState, useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import { checkSession, endSession } from './services';
 import Nav from './Nav';
 import Chat from './Chat';
-import DisplayChatBox from './DisplayChatBox';
 import Login from './Login';
 import { reducer } from './reducer';
 import Loader from 'react-loader-spinner';
@@ -14,7 +13,14 @@ function App() {
     isPending: true,
   });
 
-  let messages = [];
+  function changeTheme(){
+    const newTheme = userState.theme==='light'? 'dark' : 'light';
+    setUserState({
+      ...userState,
+      theme: newTheme,
+  })
+};
+
   // const [state, dispatch] = useReducer(reducer, initState); 
   // const setTheme = (e) => dispatch({
   //   type: 'setTheme',
@@ -77,7 +83,7 @@ function App() {
   if(userState.isPending) {
     return (
       <div className="app">
-         <Loader type="Circles" color="#00BFFF" height={30} width={30}/>
+         <Loader type="Circles" color="#00BFFF" height={20} width={20}/>
       </div>
     );
   }
@@ -85,15 +91,16 @@ function App() {
   let chatPage;
 
   if(userState.isLoggedIn) {
-    chatPage = <Chat />;
+    chatPage = <Chat username={userState.username} theme={userState.theme} onTheme={changeTheme}/>;
   } else {
-    chatPage = <Login onLogin={login}/>;
+    chatPage = (<div><Login onLogin={login}/><Login/></div>);
+                
   }
  
   // check and switch Nav 
   return (
     <div className="app">
-      <Nav user={userState} onLogout={logout}/>
+      <Nav user={userState} onTheme={changeTheme} username={userState.username} onLogout={logout}/>
       {chatPage}
       
     </div>

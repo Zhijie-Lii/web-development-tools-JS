@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createSession } from './services';
+import { createSession, errorMessages } from './services';
 
 const Login = function({ onLogin }) {
   const [username, setUsername] = useState('');
@@ -21,13 +21,14 @@ const Login = function({ onLogin }) {
       onLogin({ username, info: userinfo.info });
     })
     .catch( err => {
-      setStatus(err.error);// TODO: convert to friendly message
+      setStatus(errorMessages[err.code || 'DEFAULT']);
       setIsPending(false);
     });
   };
 
   return (
-    <div>
+    <div className="header">
+      <h1>Chat-app</h1>
       { status && <div class="status">{status}</div>}
       <label>
         Username:

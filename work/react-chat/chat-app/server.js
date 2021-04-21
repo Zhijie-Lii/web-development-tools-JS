@@ -9,7 +9,7 @@ app.use(express.static('./build'));
 app.use(express.json());
 app.use(cookieParser());
 
-app.get('/api/session/messages', (req, res) => {
+app.get('/api/session', (req, res) => {
     const sid = req.cookies.sid;
     if (!sid) {
         res.status(401).json({ error: 'session-required'});
@@ -19,11 +19,11 @@ app.get('/api/session/messages', (req, res) => {
         res.status(403).json({ error: 'session-invalid'});
         return; 
     }
-    setTimeout((res.status(200).json(session.details[sid])),1500);
+    setTimeout((res.status(200).json(session.details[sid])),3000);
     
 });
 
-app.post('/api/session', express.json(), (req, res) => {
+app.post('/api/session', (req, res) => {
     const { username } = req.body;
     
     const { error, sid } = session.create({username}); 
@@ -44,11 +44,29 @@ app.delete('/api/session', (req, res) => {
   });
 
 app.get('/api/userList',(req, res) => {
+    res.json(Object.values(session.details).map( 
+        eachSession =>  eachSession.username ));
 
 });
 
 app.get('/api/messageList',(req, res) => {
+    // console.log(chat.messages)
+    setTimeout(res.json(chat.messages), 2000);
     
+})
+
+app.post('/api/messageList', (req, res) => {
+    const sid = req.cookies.sid;
+    
+    console.log(sid)
+    chat.messages.push({
+        sender, 
+        text, 
+        // avatar:session.details[sid].avatar ,
+        timeStamp,
+    });
+    res.json(chat.messages);
+
 })
 
 app.listen(PORT, () => {
