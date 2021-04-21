@@ -46,7 +46,7 @@
 }
 
 .sender {
-  color:grey;
+  color:rgba(128, 128, 128, 0.575);
   font-weight: bold;
 }
 
