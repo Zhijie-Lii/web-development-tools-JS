@@ -58,7 +58,8 @@ app.get('/api/messageList',(req, res) => {
 app.post('/api/messageList', (req, res) => {
     const sid = req.cookies.sid;
     
-    console.log(sid)
+    let { sender, text, timeStamp } = req.body;
+    console.log(sid, body)
     chat.messages.push({
         sender, 
         text, 

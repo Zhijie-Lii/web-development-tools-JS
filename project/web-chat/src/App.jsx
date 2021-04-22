@@ -1,9 +1,8 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect } from 'react';
 import { checkSession, endSession } from './services';
 import Nav from './Nav';
 import Chat from './Chat';
 import Login from './Login';
-import { reducer } from './reducer';
 import Loader from 'react-loader-spinner';
 import './App.css';
 

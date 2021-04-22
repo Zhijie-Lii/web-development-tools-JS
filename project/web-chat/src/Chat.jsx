@@ -8,7 +8,7 @@ const Chat = ({username, theme} ) => {
     const [error, setError] = useState('');
     const [text,setText] = useState('');
 
-    function addNewMessage(text) {
+    function addNewMessage() {
       console.log(text, username)
       fetchNewMessage( username, text )
       .then( (newMessageList) => {
@@ -40,12 +40,11 @@ const Chat = ({username, theme} ) => {
     return (
         <ul className={theme}>
             <DisplayChatBox userList={userList} messageList={messageList}></DisplayChatBox>
-            
             <p className="error-msg">{error}</p>
 
             <div className="outgoing">
               <textarea rows="5" cols="30" onChange={(e) => setText(e.target.value)}></textarea>
-              <button onClick={addNewMessage}>Send</button>
+              <img onClick={addNewMessage} src="./send_icon.svg" width="30px" height="30px"></img>
             </div>
         </ul>
     )
