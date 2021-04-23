@@ -19,6 +19,7 @@ const Login = function({ onLogin }) {
       setStatus('');
       setIsPending(false);
       onLogin({ username, info: userinfo.info });
+      console.log(userinfo)
     })
     .catch( err => {
       setStatus(errorMessages[err.code || 'DEFAULT']);

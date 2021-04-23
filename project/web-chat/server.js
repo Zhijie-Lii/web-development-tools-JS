@@ -19,7 +19,9 @@ app.get('/api/session', (req, res) => {
         res.status(403).json({ error: 'session-invalid'});
         return; 
     }
-    setTimeout((res.status(200).json(session.details[sid])),3000);
+    setTimeout(() => {
+        res.status(200).json(session.details[sid]);
+    }, 500);
     
 });
 
@@ -33,14 +35,19 @@ app.post('/api/session', (req, res) => {
     } 
 
     res.cookie('sid', sid);
-    res.status(200).json(session.details[sid]);
+    setTimeout( () => {
+        res.status(200).json(session.details[sid]);
+    }, 1000);
 });
 
 app.delete('/api/session', (req, res) => {
     const sid = req.cookies.sid;
     session.remove(sid);
     res.clearCookie('sid');
-    res.json({ sid, status: 'removed' });
+  
+    setTimeout(() => {
+        res.json({ sid, status: 'removed' });
+    }, 2000);
   });
 
 app.get('/api/userList',(req, res) => {
@@ -51,15 +58,16 @@ app.get('/api/userList',(req, res) => {
 
 app.get('/api/messageList',(req, res) => {
     // console.log(chat.messages)
-    setTimeout(res.json(chat.messages), 2000);
-    
+    setTimeout(() => {
+        res.json(chat.messages);
+    }, 1000);
 })
 
-app.post('/api/messageList', (req, res) => {
+app.post('/api/messages', (req, res) => {
     const sid = req.cookies.sid;
-    
     let { sender, text, timeStamp } = req.body;
-    console.log(sid, body)
+
+    console.log( sender, text);
     chat.messages.push({
         sender, 
         text, 

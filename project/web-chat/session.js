@@ -24,9 +24,9 @@ const create = function({ username }) {
     const sid = uuid();
     users[username] = users[username] || {
         nickname: "default",
-        avatar: 'www.avatar.com',
+        avatar: './avatar_boy2.jpg',
         theme: 'light',
-        lastActive: Date.now(), //stuff
+        lastActive: Date.now(),
     };
     sessions[sid] = {
         sid,

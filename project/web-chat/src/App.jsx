@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { checkSession, endSession } from './services';
+import { checkSession, endSession, errorMessages } from './services';
 import Nav from './Nav';
 import Chat from './Chat';
 import Login from './Login';
+import DisplayUserInfo from './DisplayUserInfo'
 import Loader from 'react-loader-spinner';
 import './App.css';
 
@@ -12,18 +13,8 @@ function App() {
     isPending: true,
   });
 
-  function changeTheme(){
-    const newTheme = userState.theme==='light'? 'dark' : 'light';
-    setUserState({
-      ...userState,
-      theme: newTheme,
-  })
-};
-
-  // const [state, dispatch] = useReducer(reducer, initState); 
-  // const setTheme = (e) => dispatch({
-  //   type: 'setTheme',
-  //   theme: e.target.value });
+  const [error, setError] = useState('');
+  const [isDisplay, setIsDisplay] = useState(false)
 
   useEffect( () => {
     checkSession()
@@ -32,14 +23,13 @@ function App() {
         isLoggedIn: true,
         isPending: false,
         username: userinfo.username,
-        nickname: userinfo.info,
-        avatar: '',
+        nickname: userinfo.username,
+        // avatar: '',
         theme: 'light',
         lastActive: Date.now(),
       });
     })
     .catch( () => {
-      // We treat any failure as not logged in
       setUserState({
         isLoggedIn: false,
         isPending: false,
@@ -48,6 +38,7 @@ function App() {
   }, []); // only run on initial render
 
   const login = function({username, info}) {
+    console.log(info)
     setUserState({
       isLoggedIn: true,
       isPending: false,
@@ -62,7 +53,6 @@ function App() {
       ...userState,  
       isPending: true,
     });
-    // Begin logout
     endSession()
     .then( () => {
       setUserState({
@@ -70,8 +60,8 @@ function App() {
         isPending: false,
       });
     })
-    .catch( () => {
-      // TODO: notify user of issue
+    .catch( (err) => {
+      setError( errorMessages[err.code || 'DEFAULT'] )
       setUserState({
         ...userState,
         isPending: false,
@@ -79,10 +69,35 @@ function App() {
     });
   };
 
+  const displayUserInfo = function() {
+    checkSession()
+    .then( userinfo => {
+      setUserState({
+        ...userState,
+        nickname: userinfo.username,
+        info: userinfo.info
+      });
+      setIsDisplay(true);
+    }) 
+  };
+
+  const displayChatPage = function() {
+      setIsDisplay(false);
+  };
+
+  const changeTheme = function(){
+    const newTheme = userState.theme==='light'? 'dark' : 'light';
+    setUserState({
+      ...userState,
+      theme: newTheme,
+  })
+};
+
   if(userState.isPending) {
     return (
-      <div className="app">
-         <Loader type="Circles" color="#00BFFF" height={20} width={20}/>
+      <div className="pending">
+          Waiting for loading...
+         <Loader type="Circles" color="#00BFFF" height={30} width={30}/>
       </div>
     );
   }
@@ -90,7 +105,8 @@ function App() {
   let chatPage;
 
   if(userState.isLoggedIn) {
-    chatPage = <Chat username={userState.username} theme={userState.theme} onTheme={changeTheme}/>;
+    chatPage = isDisplay? <DisplayUserInfo userInfo={userState.info}/> : 
+    <Chat username={userState.username} theme={userState.theme} onTheme={changeTheme} info={userState.info}/>;
   } else {
     chatPage = (<div><Login onLogin={login}/><Login/></div>);
                 
@@ -99,8 +115,10 @@ function App() {
   // check and switch Nav 
   return (
     <div className="app">
-      <Nav user={userState} onTheme={changeTheme} username={userState.username} onLogout={logout}/>
+      <Nav user={userState} onTheme={changeTheme} username={userState.username} 
+        onChatPage={displayChatPage} onUserInfo={displayUserInfo} onLogout={logout}/>
       {chatPage}
+      <p className="error-msg">{error}</p>
       
     </div>
     
