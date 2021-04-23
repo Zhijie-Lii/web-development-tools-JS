@@ -11,6 +11,9 @@ const isValidUsername = function( username ) {
     if(username !== cleanUsername) {
         return false;
     }
+    if (username.search("dog") !== -1) {
+        return false;
+    }
     return true;
 };
 
