@@ -80,7 +80,7 @@ export const fetchNewMessage = function( username, text) {
         body: JSON.stringify({ 
             sender: username, 
             text,
-            timeStamp: Date.now(),
+            timeStamp: new Date().toLocaleTimeString(),
         })
     })
     .catch( () => Promise.reject({ error: 'network-error'} ) )

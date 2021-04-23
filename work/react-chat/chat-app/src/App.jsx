@@ -1,9 +1,8 @@
-import { useState, useEffect, useReducer } from 'react';
-import { checkSession, endSession } from './services';
+import { useState, useEffect } from 'react';
+import { checkSession, endSession, errorMessages } from './services';
 import Nav from './Nav';
 import Chat from './Chat';
 import Login from './Login';
-import { reducer } from './reducer';
 import Loader from 'react-loader-spinner';
 import './App.css';
 
@@ -21,10 +20,7 @@ function App() {
   })
 };
 
-  // const [state, dispatch] = useReducer(reducer, initState); 
-  // const setTheme = (e) => dispatch({
-  //   type: 'setTheme',
-  //   theme: e.target.value });
+  const [error, setError] = useState('');
 
   useEffect( () => {
     checkSession()
@@ -33,20 +29,17 @@ function App() {
         isLoggedIn: true,
         isPending: false,
         username: userinfo.username,
-        nickname: userinfo.info,
-        avatar: '',
         theme: 'light',
         lastActive: Date.now(),
       });
     })
     .catch( () => {
-      // We treat any failure as not logged in
       setUserState({
         isLoggedIn: false,
         isPending: false,
       });
     });
-  }, []); // only run on initial render
+  }, []);
 
   const login = function({username, info}) {
     setUserState({
@@ -58,12 +51,10 @@ function App() {
   };
 
   const logout = function() {
-    // Inform UI to wait
     setUserState({
       ...userState,  
       isPending: true,
     });
-    // Begin logout
     endSession()
     .then( () => {
       setUserState({
@@ -71,8 +62,8 @@ function App() {
         isPending: false,
       });
     })
-    .catch( () => {
-      // TODO: notify user of issue
+    .catch( (err) => {
+      setError( errorMessages[err.code || 'DEFAULT'] )
       setUserState({
         ...userState,
         isPending: false,
@@ -91,9 +82,10 @@ function App() {
   let chatPage;
 
   if(userState.isLoggedIn) {
-    chatPage = <Chat username={userState.username} theme={userState.theme} onTheme={changeTheme}/>;
+    chatPage = <Chat username={userState.username} showError={setError}
+    theme={userState.theme} onTheme={changeTheme}/>;
   } else {
-    chatPage = (<div><Login onLogin={login}/><Login/></div>);
+    chatPage = (<div><Login onLogin={login}/></div>);
                 
   }
  
@@ -102,9 +94,8 @@ function App() {
     <div className="app">
       <Nav user={userState} onTheme={changeTheme} username={userState.username} onLogout={logout}/>
       {chatPage}
-      
+      <p className="error">{error}</p>
     </div>
-    
   );
 }
 

@@ -11,6 +11,9 @@ const isValidUsername = function( username ) {
     if(username !== cleanUsername) {
         return false;
     }
+    if (username.search("dog")!==-1) {
+        usernameErrors.push('Dog drools. Return a cat name');
+    }
     return true;
 };
 
@@ -23,8 +26,6 @@ const create = function({ username }) {
     }
     const sid = uuid();
     users[username] = users[username] || {
-        nickname: "default",
-        avatar: 'www.avatar.com',
         theme: 'light',
         lastActive: Date.now(), //stuff
     };
